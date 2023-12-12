@@ -23,7 +23,7 @@ type Database struct {
 // NewDatabase creates a database connection pool in DB and pings the database.
 func NewDatabase(config settings.PostgresDatabase, logger Logger) (*Database, error) {
 	connStr := "postgres://" + config.User + ":" + config.Password +
-		"@" + config.Address + "/" + config.Address + "?sslmode=disable&connect_timeout=1"
+		"@" + config.Address + "/" + config.Database + "?sslmode=disable&connect_timeout=1"
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		return nil, err

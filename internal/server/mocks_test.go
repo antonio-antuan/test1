@@ -177,7 +177,7 @@ func (m *MockProcessor) EXPECT() *MockProcessorMockRecorder {
 }
 
 // CreateUser mocks base method.
-func (m *MockProcessor) CreateUser(arg0 context.Context, arg1 models.User) error {
+func (m *MockProcessor) CreateUser(arg0 context.Context, arg1 models.Post) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateUser", arg0, arg1)
 	ret0, _ := ret[0].(error)
@@ -191,10 +191,10 @@ func (mr *MockProcessorMockRecorder) CreateUser(arg0, arg1 interface{}) *gomock.
 }
 
 // GetUserByID mocks base method.
-func (m *MockProcessor) GetUserByID(arg0 context.Context, arg1 uint64) (models.User, error) {
+func (m *MockProcessor) GetUserByID(arg0 context.Context, arg1 uint64) (models.Post, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetUserByID", arg0, arg1)
-	ret0, _ := ret[0].(models.User)
+	ret0, _ := ret[0].(models.Post)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

@@ -21,6 +21,5 @@ type Metrics interface {
 }
 
 type Processor interface {
-	CreateUser(ctx context.Context, user models.User) error
-	GetUserByID(ctx context.Context, id uint64) (user models.User, err error)
+	GetPosts(ctx context.Context) (user []models.Post, err error)
 }

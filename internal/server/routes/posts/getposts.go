@@ -1,4 +1,4 @@
-package users
+package posts
 
 import (
 	"context"
@@ -9,13 +9,11 @@ import (
 	"strconv"
 
 	"github.com/go-chi/chi"
-	dataerr "github.com/qdm12/go-template/internal/data/errors"
 	"github.com/qdm12/go-template/internal/server/contenttype"
 	"github.com/qdm12/go-template/internal/server/httperr"
 )
 
-// Handler to get a user by ID (GET /users/{id}).
-func (h *handler) getUserByID(w http.ResponseWriter, r *http.Request) {
+func (h *handler) getPosts(w http.ResponseWriter, r *http.Request) {
 	_, responseContentType, err := contenttype.APICheck(r.Header)
 	w.Header().Set("Content-Type", responseContentType)
 	errResponder := httperr.NewResponder(responseContentType, h.logger)
@@ -25,17 +23,9 @@ func (h *handler) getUserByID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	id, err := extractUserID(r)
-	if err != nil {
-		errResponder.Respond(w, http.StatusBadRequest, err.Error())
-		return
-	}
-
-	user, err := h.proc.GetUserByID(r.Context(), id)
+	posts, err := h.proc.GetPosts(r.Context())
 	if err != nil {
 		switch {
-		case errors.Is(err, dataerr.ErrUserNotFound):
-			errResponder.Respond(w, http.StatusNotFound, err.Error())
 		case errors.Is(err, context.DeadlineExceeded):
 			errResponder.Respond(w, http.StatusRequestTimeout, "")
 		default:
@@ -45,7 +35,7 @@ func (h *handler) getUserByID(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = json.NewEncoder(w).Encode(user)
+	err = json.NewEncoder(w).Encode(posts)
 	if err != nil {
 		h.logger.Error(err.Error())
 		errResponder.Respond(w, http.StatusInternalServerError, "")

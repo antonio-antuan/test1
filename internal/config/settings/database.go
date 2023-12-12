@@ -8,8 +8,6 @@ import (
 )
 
 const (
-	MemoryStoreType   = "memory"
-	JSONStoreType     = "json"
 	PostgresStoreType = "postgres"
 )
 
@@ -21,9 +19,7 @@ type Database struct {
 }
 
 func (d *Database) setDefaults() {
-	d.Type = ptrTo(MemoryStoreType)
-	d.Memory.setDefaults()
-	d.JSON.setDefaults()
+	d.Type = ptrTo(PostgresStoreType)
 	d.Postgres.setDefaults()
 }
 
@@ -33,16 +29,6 @@ var (
 
 func (d *Database) validate() (err error) {
 	switch *d.Type {
-	case MemoryStoreType:
-		err = d.Memory.validate()
-		if err != nil {
-			return fmt.Errorf("memory database: %w", err)
-		}
-	case JSONStoreType:
-		err = d.JSON.validate()
-		if err != nil {
-			return fmt.Errorf("json database: %w", err)
-		}
 	case PostgresStoreType:
 		err = d.Postgres.validate()
 		if err != nil {
@@ -59,10 +45,6 @@ func (d *Database) toLinesNode() (node *gotree.Node) {
 	node = gotree.New("Database settings:")
 	node.Appendf("Type: %s", *d.Type)
 	switch *d.Type {
-	case MemoryStoreType:
-		node.AppendNode(d.Memory.toLinesNode())
-	case JSONStoreType:
-		node.AppendNode(d.JSON.toLinesNode())
 	case PostgresStoreType:
 		node.AppendNode(d.Postgres.toLinesNode())
 	}

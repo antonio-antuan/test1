@@ -6,16 +6,14 @@ import (
 
 	"github.com/go-chi/chi"
 	"github.com/qdm12/go-template/internal/config/settings"
-	"github.com/qdm12/go-template/internal/models"
 	"github.com/qdm12/go-template/internal/server/middlewares/cors"
 	logmware "github.com/qdm12/go-template/internal/server/middlewares/log"
 	metricsmware "github.com/qdm12/go-template/internal/server/middlewares/metrics"
-	"github.com/qdm12/go-template/internal/server/routes/build"
-	"github.com/qdm12/go-template/internal/server/routes/users"
+	"github.com/qdm12/go-template/internal/server/routes/posts"
 )
 
 func NewRouter(config settings.HTTP, logger Logger,
-	metrics Metrics, buildInfo models.BuildInformation,
+	metrics Metrics,
 	proc Processor) *chi.Mux {
 	router := chi.NewRouter()
 
@@ -34,10 +32,7 @@ func NewRouter(config settings.HTTP, logger Logger,
 	for strings.HasSuffix(APIPrefix, "/") {
 		APIPrefix = strings.TrimSuffix(APIPrefix, "/")
 	}
-	APIPrefix += "/api/v1"
-
-	router.Mount(APIPrefix+"/users", users.NewHandler(logger, proc))
-	router.Mount(APIPrefix+"/build", build.NewHandler(logger, buildInfo))
+	router.Mount("/posts", posts.NewHandler(logger, proc))
 
 	return router
 }

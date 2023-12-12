@@ -1,5 +1,5 @@
 // Package users is the HTTP handler for the users.
-package users
+package posts
 
 import (
 	"github.com/go-chi/chi"
@@ -16,8 +16,7 @@ func NewHandler(logger Logger, proc Processor) *chi.Mux {
 		logger: logger,
 	}
 	router := chi.NewRouter()
-	router.Get("/{id}", h.getUserByID)
-	router.Post("/", h.createUser)
+	router.Get("/", h.getPosts)
 	router.Options("/", h.options)
 	return router
 }

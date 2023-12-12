@@ -8,3 +8,6 @@ Dockerfile
 LICENSE
 README.md
 title.svg
+.idea
+postgres_password
+postgres_user

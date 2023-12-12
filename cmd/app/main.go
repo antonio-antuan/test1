@@ -181,7 +181,7 @@ func _main(ctx context.Context, buildInfo models.BuildInformation,
 	serverLogger := logger.New(log.SetComponent("http server"))
 	serverSettings := httpserver.Settings{
 		Name:    ptrTo("main"),
-		Handler: server.NewRouter(config.HTTP, serverLogger, metrics, buildInfo, proc),
+		Handler: server.NewRouter(config.HTTP, serverLogger, metrics, proc),
 		Address: ptrTo(*config.HTTP.Address),
 		Logger:  serverLogger,
 	}
@@ -238,17 +238,12 @@ type Database interface {
 	String() string
 	Start() (runError <-chan error, err error)
 	Stop() (err error)
-	CreateUser(ctx context.Context, user models.User) (err error)
-	GetUserByID(ctx context.Context, id uint64) (user models.User, err error)
+	GetPosts(ctx context.Context) (posts []models.Post, err error)
 }
 
 func setupDatabase(databaseSettings settings.Database, logger log.LeveledLogger) ( //nolint:ireturn
 	db Database, err error) {
 	switch *databaseSettings.Type {
-	case settings.MemoryStoreType:
-		return data.NewMemory()
-	case settings.JSONStoreType:
-		return data.NewJSON(databaseSettings.JSON.Filepath)
 	case settings.PostgresStoreType:
 		return data.NewPostgres(databaseSettings.Postgres, logger)
 	default:
