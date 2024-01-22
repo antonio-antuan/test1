@@ -9,7 +9,7 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/prometheus/client_golang v1.15.1
 	github.com/qdm12/goservices v0.1.0-rc1
-	github.com/qdm12/gosettings v0.3.0-rc2
+	github.com/qdm12/gosettings v0.4.0-rc9
 	github.com/qdm12/gosplash v0.1.0
 	github.com/qdm12/gotree v0.2.0
 	github.com/qdm12/govalid v0.2.0-rc1
@@ -32,8 +32,8 @@ require (
 	github.com/prometheus/common v0.42.0 // indirect
 	github.com/prometheus/procfs v0.9.0 // indirect
 	github.com/rogpeppe/go-internal v1.10.0 // indirect
-	golang.org/x/exp v0.0.0-20230522175609-2e198f4a06a1 // indirect
-	golang.org/x/sys v0.6.0 // indirect
+	golang.org/x/exp v0.0.0-20231110203233-9a3e6036ecaa // indirect
+	golang.org/x/sys v0.14.0 // indirect
 	google.golang.org/protobuf v1.30.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
